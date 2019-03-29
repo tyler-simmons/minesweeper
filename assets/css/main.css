@@ -1,0 +1,49 @@
+h1 {
+    text-align: center;
+}
+
+.controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.grid {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.grid-square {
+    width: 35px;
+    height: 35px;
+    /* flex-basis: 25%; */
+    border: 1px solid black;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.grid-spacer {
+    display: flex;
+    flex-basis: 100%;
+}
+
+.covered {
+    background-color: grey;
+    color: rgba(0, 0, 0, 1);
+}
+
+.flagged {
+
+}
+
+.uncovered {
+    background-color: lightgrey;
+    color: rgba(0, 0, 0, 1);
+}
+
+.mine {
+    background-color: red;
+}
