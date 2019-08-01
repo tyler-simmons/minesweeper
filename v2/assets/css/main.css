@@ -1,0 +1,103 @@
+header {
+    text-align: center;
+}
+
+main {
+    /* display: flex; */
+    
+    /* justify-content: center; */
+    
+}
+
+div#game-controls {
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    background-color: orange;
+    /* border: 2px solid black; */
+    margin: 0 auto;
+}
+
+div#difficulty-container, div#info-container {
+    display: flex;
+    align-items: center;
+}
+
+div#difficulty-container {
+    justify-content: left;
+}
+
+div#info-container {
+    justify-content: right;
+}
+
+div#game-board {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+}
+
+
+
+/* Utility Classes - UI containers*/
+.easy-width {
+    width: 600px;
+}
+
+.easy-width-half {
+    width: 300px;
+}
+
+.medium-width {
+    width: 720px;
+}
+
+.medium-width-half {
+    width: 360px;
+}
+
+.hard-width {
+    width: 840px;
+}
+
+.hard-width-half {
+    width: 420px;
+}
+
+/* Utility Classes - Game board */
+.board-square {
+    /* border: 1px solid black; */
+    background-color: grey;
+}
+.board-square-alt {
+    background-color: lightgray;
+}
+
+.board-square:hover {
+    background-color: rgba(0, 0, 100, 0.3);
+}
+
+.board-square-alt:hover {
+    background-color: rgba(0, 0, 100, 0.3);
+}
+
+
+.easy-square {
+    width: 60px;
+    height: 60px;
+}
+
+.medium-square {
+    width: 40px;
+    height: 40px;
+}
+
+.hard-square {
+    width: 35px;
+    height: 35px;
+}
+
+.spacer-square {
+    display: flex;
+    flex-basis: 100%;
+}
