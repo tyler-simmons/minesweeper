@@ -120,7 +120,8 @@ function initGameLogic(rows, cols) {
     }
 }
 
-
+//Create the game board DOM based on number of rows, columns, and difficulty params
+//Needs game logic rep created before it is called
 function initGameBoardDOM(rows, cols, difficulty) {
     
     let difficultyClass = `${difficulty}-square`
@@ -143,6 +144,7 @@ function initGameBoardDOM(rows, cols, difficulty) {
                 }
             }
             uiContainers.gameBoard.append(boardSquare);
+            gameBoardLogicRep[i][j].domLink = boardSquare;
         }
     }
 }
@@ -154,17 +156,20 @@ function reloadGameAndUi(difficulty) {
     
     switch (difficulty) {
         case 'easy':
+            initGameLogic(boardDimensions.easy.rows, boardDimensions.easy.cols);
             initGameUi('easy');
             initGameBoardDOM(boardDimensions.easy.rows, boardDimensions.easy.cols, 'easy');
             initGameLogic(boardDimensions.easy.rows, boardDimensions.easy.cols);
             
             break;
         case 'medium':
+            initGameLogic(boardDimensions.medium.rows, boardDimensions.medium.cols);
             initGameUi('medium');
             initGameBoardDOM(boardDimensions.medium.rows, boardDimensions.medium.cols, 'medium');
             initGameLogic(boardDimensions.medium.rows, boardDimensions.medium.cols)
             break;
         case 'hard':
+            initGameLogic(boardDimensions.hard.rows, boardDimensions.hard.cols)
             initGameUi('hard');
             initGameBoardDOM(boardDimensions.hard.rows, boardDimensions.hard.cols, 'hard');
             initGameLogic(boardDimensions.hard.rows, boardDimensions.hard.cols)
@@ -198,11 +203,16 @@ function difficultySelectorConfig() {
 
 function gameBoardConfig() {
     //link DOM objects to logcical storage
+    // for (let i = 0; i < gameBoardLogicRep.length; i++) {
+    //     for (let j = 0; j < gameBoardLogicRep[i].length; j++) {
+
+    //     }
+    // }
     //Add click listener
     //add context menu listener
 }
 
-
+initGameLogic(8, 10);
 initGameUi('easy');
 initGameBoardDOM(8, 10, 'easy');
 difficultySelectorConfig();
