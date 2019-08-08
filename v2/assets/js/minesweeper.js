@@ -44,6 +44,7 @@ const gameMeta = {
     mines: boardDimensions.easy.mines,
     gameStarted: false,
     hiddenSquares: 0,
+    flagsRemaining: boardDimensions.easy.mines,
     firstClick : {
         x : -1,
         y: -1
@@ -104,7 +105,7 @@ function createInteractiveComponents(difficulty) {
     //Create Interactive UI Components
     uiComponents.difficultySelector = $('<select name="difficulty" id="difficulty-select"><option value="easy">Easy</option><option value="medium">Medium</option><option value="hard">Hard</option></select>');
     uiComponents.difficultySelector.val(difficulty);
-    uiComponents.flagCount = $('<i class="fas fa-flag"><span id="flag-count">##</span></i>');
+    uiComponents.flagCount = $(`<i class="fas fa-flag"><span id="flag-count"></span></i>`);
     uiComponents.timer = $('<i class="fas fa-stopwatch"><span id="timer">##:##</span></i>');
 }
 
@@ -130,6 +131,9 @@ function renderDOM() {
 }
 
 
+function refreshMineCount() {
+    $('#flag-count').text(`${gameMeta.flagsRemaining}`);
+}
 // *************************************************************************//
 
 
@@ -211,6 +215,7 @@ function initGameUi(difficulty) {
     createInteractiveComponents(difficulty);
     configureCssOnComponents(widthClass, widthHalfCLass);
     
+    
     //Render DOM
     renderDOM();
 }
@@ -221,6 +226,7 @@ function initGameState(difficulty, mines, gridTotal) {
     gameMeta.difficulty = difficulty;
     gameMeta.mines = mines;
     gameMeta.hiddenSquares = gridTotal - mines;
+    console.log(`Hidden squares is ${gameMeta.hiddenSquares}`);
 }
 
 
@@ -368,12 +374,16 @@ function gameBoardConfig() {
                         gameBoardLogicRep[row][col].domLink.empty();
                         gameBoardLogicRep[row][col].isFlagged = false;
                         gameBoardLogicRep[row][col].domLink.removeClass('flagged');
+                        gameMeta.flagsRemaining += 1;
                     } else {
                         gameBoardLogicRep[row][col].domLink.html(flagHtml);
                         gameBoardLogicRep[row][col].isFlagged = true;
                         gameBoardLogicRep[row][col].domLink.addClass('flagged');
+                        gameMeta.flagsRemaining -= 1;
                     }
+                    refreshMineCount();
                 }
+
             });
         }
     }
@@ -396,15 +406,23 @@ function firstClickConfig(clickRow, clickCol) {
 //reveal + fill work together as the main business logic of the game
 function reveal(row, col) {
     
+    if (gameBoardLogicRep[row][col].isRevealed == true) {
+        console.log('reveal called on a revealed square');
+        return;
+    }
+    
     //reveal the square that was clicked (logical reveal NOT graphical)
     gameBoardLogicRep[row][col].isRevealed = true;
-    gameMeta.hiddenSquares -= 1;
     
     //check game losing case
     if (gameBoardLogicRep[row][col].isBomb == true) {
         alert('you lose');
         return;
     }
+
+    console.log(`Decrementing hidden squares from ${gameMeta.hiddenSquares}`);
+    gameMeta.hiddenSquares -= 1;
+    console.log(`hiddenSquares decremented new number is ${gameMeta.hiddenSquares}`);
 
     //check for win condition
     if (gameMeta.hiddenSquares == 0) {
@@ -500,6 +518,6 @@ initGameUi('easy');
 initGameBoardDOM(8, 10, 'easy');
 difficultySelectorConfig();
 gameBoardConfig();
-
+refreshMineCount();
 
 
