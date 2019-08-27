@@ -407,7 +407,7 @@ function firstClickConfig(clickRow, clickCol) {
 function reveal(row, col) {
     
     if (gameBoardLogicRep[row][col].isRevealed == true) {
-        console.log('reveal called on a revealed square');
+        console.log('DEBUG: reveal called on a revealed square');
         return;
     }
     
@@ -417,6 +417,7 @@ function reveal(row, col) {
     //check game losing case
     if (gameBoardLogicRep[row][col].isBomb == true) {
         alert('you lose');
+        reloadGameAndUi(gameMeta.difficulty);
         return;
     }
 
@@ -424,15 +425,12 @@ function reveal(row, col) {
     gameMeta.hiddenSquares -= 1;
     console.log(`hiddenSquares decremented new number is ${gameMeta.hiddenSquares}`);
 
-    //check for win condition
-    if (gameMeta.hiddenSquares == 0) {
-        alert('You won!!');
-        return;
-    }
+    
 
     //passed logical checks - apply graphical reveal class
     gameBoardLogicRep[row][col].domLink.addClass('revealed');
 
+    
     //If the clicked square has adjacent bombs reveal JUST that square - if not,
     //call fill and recursively clear all empty neighbor squares
     if (gameBoardLogicRep[row][col].adjacentBombs > 0) {
@@ -440,6 +438,12 @@ function reveal(row, col) {
         gameBoardLogicRep[row][col].domLink.addClass(`color-${gameBoardLogicRep[row][col].adjacentBombs}`);
     } else if (gameBoardLogicRep[row][col].adjacentBombs == 0) {
         fill(row, col);
+    }
+
+    //check for win condition
+    if (gameMeta.hiddenSquares == 0) {
+        alert('You won!!');
+        return;
     }
 }
 
